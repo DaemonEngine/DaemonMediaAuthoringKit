@@ -57,12 +57,15 @@ ExternalProject_Add(chameleon
 )
 
 ExternalProject_Add(urcheon
-    PREFIX ExternalProjects/crunch
+    PREFIX ExternalProjects/urcheon
     GIT_REPOSITORY https://github.com/DaemonEngine/Urcheon.git
     CONFIGURE_COMMAND echo
     BUILD_COMMAND echo
     INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
-    INSTALL_COMMAND && cp -a ../urcheon/Urcheon ${CMAKE_INSTALL_PREFIX}/Urcheon
+    INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/Urcheon
+    INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/profile
+    INSTALL_COMMAND && cp -a ../urcheon/Urcheon/. ${CMAKE_INSTALL_PREFIX}/Urcheon/.
+    INSTALL_COMMAND && cp -a ../urcheon/profile/. ${CMAKE_INSTALL_PREFIX}/profile/.
     INSTALL_COMMAND && cp -a ../urcheon/bin/urcheon ${CMAKE_INSTALL_PREFIX}/bin/urcheon
     INSTALL_COMMAND && cp -a ../urcheon/bin/esquirel ${CMAKE_INSTALL_PREFIX}/bin/esquirel
 )
