@@ -70,6 +70,7 @@ ExternalProject_Add(urcheon
 ExternalProject_Add(iqm
     PREFIX ExternalProjects/iqm
     SVN_REPOSITORY https://svn.code.sf.net/p/fteqw/code/trunk/iqm
+    SVN_REVISION -r5570
     CONFIGURE_COMMAND echo
     BUILD_COMMAND $(MAKE) -C ../iqm
     BUILD_COMMAND && strip ../iqm/iqm
