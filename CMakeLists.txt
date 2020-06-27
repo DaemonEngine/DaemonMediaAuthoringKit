@@ -97,3 +97,90 @@ ExternalProject_Add(libwebp
     CMAKE_ARGS -DWEBP_BUILD_WEBP_JS=OFF
     CMAKE_ARGS -DWEBP_NEAR_LOSSLESS=ON
 )
+
+ExternalProject_Add(flac
+    PREFIX ExternalProjects/flac
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/flac.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(ogg
+    PREFIX ExternalProjects/ogg
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/ogg.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(vorbis
+    PREFIX ExternalProjects/vorbis
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/vorbis.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(vorbis-tools
+    DEPENDS vorbis ogg
+    PREFIX ExternalProjects/vorbis-tools
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/vorbis-tools.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
+    CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    CONFIGURE_COMMAND --disable-vcut --disable-ogg123
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(opus
+    PREFIX ExternalProjects/opus
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/opus.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(opusfile
+    DEPENDS opus ogg
+    PREFIX ExternalProjects/opusfile
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/opusfile.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(libopusenc
+    DEPENDS opus
+    PREFIX ExternalProjects/libopusenc
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/libopusenc.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
+
+ExternalProject_Add(opus-tools
+    DEPENDS libopusenc opusfile opus ogg
+    PREFIX ExternalProjects/opus-tools
+    GIT_REPOSITORY https://gitlab.xiph.org/xiph/opus-tools.git
+    BUILD_IN_SOURCE ON
+    CONFIGURE_COMMAND ./autogen.sh
+    CONFIGURE_COMMAND && PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
+    CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}
+    BUILD_COMMAND $(MAKE)
+    INSTALL_COMMAND $(MAKE) install
+)
