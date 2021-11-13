@@ -18,7 +18,7 @@ option(BUILD_SLOTH "Build Sloth material generator" ON)
 option(BUILD_Q3MAP2 "Build q3map2 map compiler and other tools" ON)
 option(BUILD_DAEMONMAP "Build daemonmap navmesh generator" ON)
 option(BUILD_IQM "Build iqm model converter" ON)
-option(BUILD_CRUNCH "Build crunch image converter" ON)
+option(BUILD_CRUNCH "Build crunch image converter and support" ON)
 option(BUILD_CWEBP "Build cwebp image converter and other tools" OFF)
 option(BUILD_OPUSENC "Build opusenc sound converter and other tools" OFF)
 option(BUILD_OGGENC "Build oggenc vorbis sound converter and other tools" OFF)
@@ -30,31 +30,36 @@ if (BUILD_NETRADIANT OR BUILD_Q3MAP2 OR BUILD_DAEMONMAP)
 		GIT_REPOSITORY https://gitlab.com/xonotic/netradiant.git
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		CMAKE_ARGS -DFHS_INSTALL=ON
-		CMAKE_ARGS -DDOWNLOAD_GAMEPACKS=ON
-		CMAKE_ARGS -DGAMEPACKS_LICENSE_LIST=none
-		CMAKE_ARGS -DGAMEPACKS_NAME_LIST=Unvanquished\ SmokinGuns
+
 		if (BUILD_NETRADIANT)
-		CMAKE_ARGS -DBUILD_RADIANT=ON
+			CMAKE_ARGS -DDOWNLOAD_GAMEPACKS=ON
+			CMAKE_ARGS -DGAMEPACKS_LICENSE_LIST=none
+			CMAKE_ARGS -DGAMEPACKS_NAME_LIST=Unvanquished\ SmokinGuns
+			CMAKE_ARGS -DBUILD_RADIANT=ON
 		endif ()
+
 		if (BUILD_Q3MAP2)
-		CMAKE_ARGS -DBUILD_TOOLS=ON
+			CMAKE_ARGS -DBUILD_TOOLS=ON
 		endif ()
+
 		if (BUILD_DAEMONMAP)
-		CMAKE_ARGS -DBUILD_DAEMONMAP=ON
+			CMAKE_ARGS -DBUILD_DAEMONMAP=ON
 		endif ()
-		CMAKE_ARGS -DBUILD_CRUNCH=ON
+
+		if (BUILD_CRUNCH)
+			CMAKE_ARGS -DBUILD_CRUNCH=ON
+		endif()
 	)
 endif()
 
-# NetRadiant already takes care of it
-# if (BUILD_DAEMONMAP)
-#     ExternalProject_Add(daemonmap
-#         PREFIX ExternalProjects/daemonmap
-#         GIT_REPOSITORY https://github.com/DaemonEngine/daemonmap.git
-#         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-#         CMAKE_ARGS -DFHS_INSTALL=ON
-#     )
-# endif ()
+if (BUILD_DAEMONMAP AND NOT BUILD_NETRADIANT AND NOT BUILD_Q3MAP2)
+	ExternalProject_Add(daemonmap
+		PREFIX ExternalProjects/daemonmap
+		GIT_REPOSITORY https://github.com/DaemonEngine/daemonmap.git
+		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+		CMAKE_ARGS -DFHS_INSTALL=ON
+	)
+endif ()
 
 if (BUILD_CRUNCH)
     ExternalProject_Add(crunch
