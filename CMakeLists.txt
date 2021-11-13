@@ -110,7 +110,8 @@ if (BUILD_SLOTH)
 		GIT_REPOSITORY https://github.com/DaemonEngine/Sloth.git
 		CONFIGURE_COMMAND echo
 		BUILD_COMMAND echo
-		INSTALL_COMMAND cp -a ../sloth/sloth.py ${CMAKE_INSTALL_PREFIX}/bin/sloth
+		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
+		INSTALL_COMMAND && cp -a ../sloth/sloth.py ${CMAKE_INSTALL_PREFIX}/bin/sloth
 	)
 endif ()
 
