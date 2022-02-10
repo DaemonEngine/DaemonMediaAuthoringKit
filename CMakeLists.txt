@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.1)
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-project(DaemonADK)
+project(DaemonMediaAuthoringKit)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install" CACHE PATH "..." FORCE)
@@ -44,7 +44,6 @@ if (BUILD_ALL OR NOT SYSTEM_FLAC)
 else ()
 	set(DEFAULT_BUILD_FLAC OFF CACHE INTERNAL "...")
 endif ()
-
 
 option(BUILD_NETRADIANT "Build NetRadiant level editor" ON)
 option(BUILD_CHAMELEON "Build Chameleon texture replacement editor" ON)
