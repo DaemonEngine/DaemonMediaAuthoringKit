@@ -173,6 +173,8 @@ if (BUILD_CWEBP)
 	)
 endif ()
 
+# opusenc and oggenc (vorbis) detects it as build time
+# to enable conversion from FLAC format.
 if (BUILD_FLAC OR BUILD_OPUSENC OR BUILD_OGGENC)
 	ExternalProject_Add(ogg
 		PREFIX ExternalProjects/ogg
