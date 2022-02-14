@@ -150,7 +150,7 @@ if (BUILD_IQM)
 		BUILD_COMMAND $(MAKE) -C ../iqm
 		BUILD_COMMAND && strip ../iqm/iqm
 		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
-		INSTALL_COMMAND && cp ../iqm/iqm ${CMAKE_INSTALL_PREFIX}/bin/iqm
+		INSTALL_COMMAND && cp ../iqm/iqm ${CMAKE_INSTALL_PREFIX}/bin/iqmtool
 	)
 endif ()
 
