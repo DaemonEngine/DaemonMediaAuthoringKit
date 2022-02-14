@@ -185,7 +185,7 @@ if (BUILD_FLAC OR BUILD_OPUSENC OR BUILD_OGGENC)
 	)
 endif ()
 
-if (BUILD_FLAC)
+if (BUILD_FLAC OR BUILD_OPUSENC OR BUILD_OGGENC)
 	ExternalProject_Add(flac
 		DEPENDS ogg
 		PREFIX ExternalProjects/flac
