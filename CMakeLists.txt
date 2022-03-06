@@ -51,7 +51,7 @@ option(BUILD_URCHEON "Build Urcheon build tool" ON)
 option(BUILD_SLOTH "Build Sloth material generator" ON)
 option(BUILD_Q3MAP2 "Build q3map2 map compiler and other tools" ON)
 option(BUILD_DAEMONMAP "Build daemonmap navmesh generator" ON)
-option(BUILD_IQM "Build iqm model converter" ON)
+option(BUILD_IQMTOOL "Build iqmtool model converter" ON)
 option(BUILD_CRUNCH "Build crunch image converter and support" ON)
 option(BUILD_CWEBP "Build cwebp image converter and other tools" ${DEFAULT_BUILD_CWEBP})
 option(BUILD_OPUSENC "Build opusenc sound converter and other tools" ${DEFAULT_BUILD_OPUSENC})
@@ -141,16 +141,15 @@ if (BUILD_URCHEON)
 	)
 endif ()
 
-if (BUILD_IQM)
-	ExternalProject_Add(iqm
-		PREFIX ExternalProjects/iqm
+if (BUILD_IQMTOOL)
+	ExternalProject_Add(iqmtool
+		PREFIX ExternalProjects/iqmtool
 		SVN_REPOSITORY https://svn.code.sf.net/p/fteqw/code/trunk/iqm
-		SVN_REVISION -r5570
 		CONFIGURE_COMMAND echo
-		BUILD_COMMAND $(MAKE) -C ../iqm
-		BUILD_COMMAND && strip ../iqm/iqm
+		BUILD_COMMAND $(MAKE) -C ../iqmtool
+		BUILD_COMMAND && strip ../iqmtool/iqmtool
 		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
-		INSTALL_COMMAND && cp ../iqm/iqm ${CMAKE_INSTALL_PREFIX}/bin/iqmtool
+		INSTALL_COMMAND && cp ../iqmtool/iqmtool ${CMAKE_INSTALL_PREFIX}/bin/iqmtool
 	)
 endif ()
 
