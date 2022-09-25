@@ -58,10 +58,28 @@ option(BUILD_OPUSENC "Build opusenc sound converter and other tools" ${DEFAULT_B
 option(BUILD_OGGENC "Build oggenc vorbis sound converter and other tools" ${DEFAULT_BUILD_OGGENC})
 option(BUILD_FLAC "Build flac sound converter" ${DEFAULT_BUILD_FLAC})
 
+set(GIT_REPOSITORY_NETRADIANT "https://gitlab.com/xonotic/netradiant.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_DAEMONMAP "https://github.com/DaemonEngine/daemonmap.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_CRUNCH "https://github.com/DaemonEngine/crunch.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_SLOTH "https://github.com/DaemonEngine/Sloth.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_CHAMELEON "https://github.com/DaemonEngine/Chameleon.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_URCHEON "https://github.com/DaemonEngine/Urcheon.git" CACHE STRING "Git repository location")
+set(SVN_REPOSITORY_IQMTOOL "https://svn.code.sf.net/p/fteqw/code/trunk/iqm" CACHE STRING "Subversion repository location")
+set(GIT_REPOSITORY_IQMTOOL "" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_CWEBP "https://chromium.googlesource.com/webm/libwebp.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_OGG "https://gitlab.xiph.org/xiph/ogg.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_FLAC "https://gitlab.xiph.org/xiph/flac.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_VORBIS "https://gitlab.xiph.org/xiph/vorbis.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_VORBISTOOLS "https://gitlab.xiph.org/xiph/vorbis-tools.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_OPUS "https://gitlab.xiph.org/xiph/opus.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_OPUSFILE "https://gitlab.xiph.org/xiph/opusfile.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_OPUSENC "https://gitlab.xiph.org/xiph/libopusenc.git" CACHE STRING "Git repository location")
+set(GIT_REPOSITORY_OPUSTOOLS "https://gitlab.xiph.org/xiph/opus-tools.git" CACHE STRING "Git repository location")
+
 if (BUILD_NETRADIANT OR BUILD_Q3MAP2 OR BUILD_DAEMONMAP)
 	ExternalProject_Add(netradiant
 		PREFIX ExternalProjects/netradiant
-		GIT_REPOSITORY https://gitlab.com/xonotic/netradiant.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_NETRADIANT}
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		CMAKE_ARGS -DFHS_INSTALL=ON
 
@@ -89,7 +107,7 @@ endif()
 if (BUILD_DAEMONMAP AND NOT BUILD_NETRADIANT AND NOT BUILD_Q3MAP2)
 	ExternalProject_Add(daemonmap
 		PREFIX ExternalProjects/daemonmap
-		GIT_REPOSITORY https://github.com/DaemonEngine/daemonmap.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_DAEMON}
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		CMAKE_ARGS -DFHS_INSTALL=ON
 	)
@@ -98,7 +116,7 @@ endif ()
 if (BUILD_CRUNCH)
 	ExternalProject_Add(crunch
 		PREFIX ExternalProjects/crunch
-		GIT_REPOSITORY https://github.com/DaemonEngine/crunch.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_CRUNCH}
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 	)
 endif ()
@@ -106,7 +124,7 @@ endif ()
 if (BUILD_SLOTH)
 	ExternalProject_Add(sloth
 		PREFIX ExternalProjects/sloth
-		GIT_REPOSITORY https://github.com/DaemonEngine/Sloth.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_SLOTH}
 		CONFIGURE_COMMAND echo
 		BUILD_COMMAND echo
 		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
@@ -117,7 +135,7 @@ endif ()
 if (BUILD_CHAMELEON)
 	ExternalProject_Add(chameleon
 		PREFIX ExternalProjects/chameleon
-		GIT_REPOSITORY https://github.com/DaemonEngine/Chameleon.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_CHAMELEON}
 		CONFIGURE_COMMAND echo
 		BUILD_COMMAND echo
 		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
@@ -128,7 +146,7 @@ endif ()
 if (BUILD_URCHEON)
 	ExternalProject_Add(urcheon
 		PREFIX ExternalProjects/urcheon
-		GIT_REPOSITORY https://github.com/DaemonEngine/Urcheon.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_URCHEON}
 		CONFIGURE_COMMAND echo
 		BUILD_COMMAND echo
 		INSTALL_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/bin
@@ -142,9 +160,21 @@ if (BUILD_URCHEON)
 endif ()
 
 if (BUILD_IQMTOOL)
+	string(COMPARE EQUAL "${GIT_REPOSITORY_IQMTOOL}" "" result)
+
+	if(result)
+		set(REPOSITORY_TYPE "SVN_REPOSITORY")
+		set(REPOSITORY_LOCATION "${SVN_REPOSITORY_IQMTOOL}")
+	else()
+		set(REPOSITORY_TYPE "GIT_REPOSITORY")
+		set(REPOSITORY_LOCATION "${GIT_REPOSITORY_IQMTOOL}")
+	endif()
+
+	# SVN_REPOSITORY ${SVN_REPOSITORY_IQMTOOL}
+
 	ExternalProject_Add(iqmtool
 		PREFIX ExternalProjects/iqmtool
-		SVN_REPOSITORY https://svn.code.sf.net/p/fteqw/code/trunk/iqm
+		${REPOSITORY_TYPE} ${REPOSITORY_LOCATION}
 		CONFIGURE_COMMAND echo
 		BUILD_COMMAND $(MAKE) -C ../iqmtool
 		BUILD_COMMAND && strip ../iqmtool/iqmtool
@@ -156,7 +186,7 @@ endif ()
 if (BUILD_CWEBP)
 	ExternalProject_Add(libwebp
 		PREFIX ExternalProjects/libwebp
-		GIT_REPOSITORY https://chromium.googlesource.com/webm/libwebp
+		GIT_REPOSITORY ${GIT_REPOSITORY_CWEBP}
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		CMAKE_ARGS -DWEBP_BUILD_ANIM_UTILS=OFF
 		CMAKE_ARGS -DWEBP_BUILD_CWEBP=ON
@@ -177,7 +207,7 @@ endif ()
 if (BUILD_FLAC OR BUILD_OPUSENC OR BUILD_OGGENC)
 	ExternalProject_Add(ogg
 		PREFIX ExternalProjects/ogg
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/ogg.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_OGG}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -190,7 +220,7 @@ if (BUILD_FLAC OR BUILD_OPUSENC OR BUILD_OGGENC)
 	ExternalProject_Add(flac
 		DEPENDS ogg
 		PREFIX ExternalProjects/flac
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/flac.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_FLAC}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -202,7 +232,7 @@ endif ()
 if (BUILD_OGGENC)
 	ExternalProject_Add(vorbis
 		PREFIX ExternalProjects/vorbis
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/vorbis.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_VORBIS}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -215,7 +245,7 @@ if (BUILD_OGGENC)
 	ExternalProject_Add(vorbis-tools
 		DEPENDS vorbis ogg
 		PREFIX ExternalProjects/vorbis-tools
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/vorbis-tools.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_VORBISTOOLS}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
@@ -229,7 +259,7 @@ endif ()
 if (BUILD_OPUSENC)
 	ExternalProject_Add(opus
 		PREFIX ExternalProjects/opus
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/opus.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_OPUS}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -242,7 +272,7 @@ if (BUILD_OPUSENC)
 	ExternalProject_Add(opusfile
 		DEPENDS opus ogg
 		PREFIX ExternalProjects/opusfile
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/opusfile.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_OPUSFILE}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -255,7 +285,7 @@ if (BUILD_OPUSENC)
 	ExternalProject_Add(libopusenc
 		DEPENDS opus
 		PREFIX ExternalProjects/libopusenc
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/libopusenc.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_OPUSENC}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
@@ -268,7 +298,7 @@ if (BUILD_OPUSENC)
 	ExternalProject_Add(opus-tools
 		DEPENDS libopusenc opusfile opus flac ogg
 		PREFIX ExternalProjects/opus-tools
-		GIT_REPOSITORY https://gitlab.xiph.org/xiph/opus-tools.git
+		GIT_REPOSITORY ${GIT_REPOSITORY_OPUSTOOLS}
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && PKG_CONFIG_PATH=${CMAKE_INSTALL_PREFIX}/lib/pkgconfig
