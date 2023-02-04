@@ -3,7 +3,7 @@ Dæmon Media Authoring Kit
 
 This is a CMake configuration to build software used to edit, build and package assets for Dæmon based games like [Unvanquished](https://unvanquished.net).
 
-It installs [_NetRadiant_](https://gitlab.com/xonotic/netradiant#netradiant), [_Chameleon_](https://github.com/DaemonEngine/Chameleon#chameleon), [_Urcheon_](https://github.com/DaemonEngine/Urcheon#urcheon), [_DaemonMap_](https://github.com/DaemonEngine/daemonmap#daemonmap), _Q3map2_, _IQM_ and [_Crunch_](https://github.com/DaemonEngine/crunch) tools in an `install` subdirectory.
+It installs [_NetRadiant_](https://gitlab.com/xonotic/netradiant#netradiant), [_Chameleon_](https://github.com/DaemonEngine/Chameleon#chameleon), [_Urcheon_](https://github.com/DaemonEngine/Urcheon#urcheon), _Q3map2_, _IQM_ and [_Crunch_](https://github.com/DaemonEngine/crunch) tools in an `install` subdirectory.
 
 If not provided by the system, it will also build and install `cwebp`, `opusenc`, `oggenc` and `flac` tools.
 

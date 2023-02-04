@@ -50,7 +50,6 @@ option(BUILD_CHAMELEON "Build Chameleon texture replacement editor" ON)
 option(BUILD_URCHEON "Build Urcheon build tool" ON)
 option(BUILD_SLOTH "Build Sloth material generator" ON)
 option(BUILD_Q3MAP2 "Build q3map2 map compiler and other tools" ON)
-option(BUILD_DAEMONMAP "Build daemonmap navmesh generator" ON)
 option(BUILD_IQMTOOL "Build iqmtool model converter" ON)
 option(BUILD_CRUNCH "Build crunch image converter and support" ON)
 option(BUILD_CWEBP "Build cwebp image converter and other tools" ${DEFAULT_BUILD_CWEBP})
@@ -59,7 +58,6 @@ option(BUILD_OGGENC "Build oggenc vorbis sound converter and other tools" ${DEFA
 option(BUILD_FLAC "Build flac sound converter" ${DEFAULT_BUILD_FLAC})
 
 set(GIT_REPOSITORY_NETRADIANT "https://gitlab.com/xonotic/netradiant.git" CACHE STRING "Git repository location")
-set(GIT_REPOSITORY_DAEMONMAP "https://github.com/DaemonEngine/daemonmap.git" CACHE STRING "Git repository location")
 set(GIT_REPOSITORY_CRUNCH "https://github.com/DaemonEngine/crunch.git" CACHE STRING "Git repository location")
 set(GIT_REPOSITORY_SLOTH "https://github.com/DaemonEngine/Sloth.git" CACHE STRING "Git repository location")
 set(GIT_REPOSITORY_CHAMELEON "https://github.com/DaemonEngine/Chameleon.git" CACHE STRING "Git repository location")
@@ -76,7 +74,7 @@ set(GIT_REPOSITORY_OPUSFILE "https://gitlab.xiph.org/xiph/opusfile.git" CACHE ST
 set(GIT_REPOSITORY_OPUSENC "https://gitlab.xiph.org/xiph/libopusenc.git" CACHE STRING "Git repository location")
 set(GIT_REPOSITORY_OPUSTOOLS "https://gitlab.xiph.org/xiph/opus-tools.git" CACHE STRING "Git repository location")
 
-if (BUILD_NETRADIANT OR BUILD_Q3MAP2 OR BUILD_DAEMONMAP)
+if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 	ExternalProject_Add(netradiant
 		PREFIX ExternalProjects/netradiant
 		GIT_REPOSITORY ${GIT_REPOSITORY_NETRADIANT}
@@ -94,24 +92,11 @@ if (BUILD_NETRADIANT OR BUILD_Q3MAP2 OR BUILD_DAEMONMAP)
 			CMAKE_ARGS -DBUILD_TOOLS=ON
 		endif ()
 
-		if (BUILD_DAEMONMAP)
-			CMAKE_ARGS -DBUILD_DAEMONMAP=ON
-		endif ()
-
 		if (BUILD_CRUNCH)
 			CMAKE_ARGS -DBUILD_CRUNCH=ON
 		endif()
 	)
 endif()
-
-if (BUILD_DAEMONMAP AND NOT BUILD_NETRADIANT AND NOT BUILD_Q3MAP2)
-	ExternalProject_Add(daemonmap
-		PREFIX ExternalProjects/daemonmap
-		GIT_REPOSITORY ${GIT_REPOSITORY_DAEMON}
-		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-		CMAKE_ARGS -DFHS_INSTALL=ON
-	)
-endif ()
 
 if (BUILD_CRUNCH)
 	ExternalProject_Add(crunch
