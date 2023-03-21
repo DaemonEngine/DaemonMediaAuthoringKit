@@ -8,7 +8,7 @@ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 project(DaemonMediaAuthoringKit)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install" CACHE PATH "..." FORCE)
+	set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install" CACHE PATH "Install path prefix, prepended onto install directories." FORCE)
 endif ()
 
 find_program(SYSTEM_CWEBP cwebp NO_CACHE)
