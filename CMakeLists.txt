@@ -51,7 +51,7 @@ option(BUILD_URCHEON "Build Urcheon build tool" ON)
 option(BUILD_SLOTH "Build Sloth material generator" ON)
 option(BUILD_Q3MAP2 "Build q3map2 map compiler and other tools" ON)
 option(BUILD_IQMTOOL "Build iqmtool model converter" ON)
-option(BUILD_CRUNCH "Build crunch image converter and support" ON)
+option(BUILD_CRUNCH "Build crunch image converter" ON)
 option(BUILD_CWEBP "Build cwebp image converter and other tools" ${DEFAULT_BUILD_CWEBP})
 option(BUILD_OPUSENC "Build opusenc sound converter and other tools" ${DEFAULT_BUILD_OPUSENC})
 option(BUILD_OGGENC "Build oggenc vorbis sound converter and other tools" ${DEFAULT_BUILD_OGGENC})
@@ -81,6 +81,10 @@ if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
 		CMAKE_ARGS -DFHS_INSTALL=ON
 
+		# Always build NetRadiant and q3map2 with CRN image support
+		# even if crunch tool is not build.
+		CMAKE_ARGS -DBUILD_CRUNCH=ON
+
 		if (BUILD_NETRADIANT)
 			CMAKE_ARGS -DDOWNLOAD_GAMEPACKS=ON
 			CMAKE_ARGS -DGAMEPACKS_LICENSE_LIST=none
@@ -91,10 +95,6 @@ if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 		if (BUILD_Q3MAP2)
 			CMAKE_ARGS -DBUILD_TOOLS=ON
 		endif ()
-
-		if (BUILD_CRUNCH)
-			CMAKE_ARGS -DBUILD_CRUNCH=ON
-		endif()
 	)
 endif()
 
