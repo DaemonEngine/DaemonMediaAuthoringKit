@@ -73,6 +73,22 @@ set(GIT_REPOSITORY_OPUSFILE "https://gitlab.xiph.org/xiph/opusfile.git" CACHE ST
 set(GIT_REPOSITORY_OPUSENC "https://gitlab.xiph.org/xiph/libopusenc.git" CACHE STRING "Git repository location")
 set(GIT_REPOSITORY_OPUSTOOLS "https://gitlab.xiph.org/xiph/opus-tools.git" CACHE STRING "Git repository location")
 
+mark_as_advanced(GIT_REPOSITORY_NETRADIANT)
+mark_as_advanced(GIT_REPOSITORY_CRUNCH)
+mark_as_advanced(GIT_REPOSITORY_SLOTH)
+mark_as_advanced(GIT_REPOSITORY_CHAMELEON)
+mark_as_advanced(GIT_REPOSITORY_URCHEON)
+mark_as_advanced(GIT_REPOSITORY_IQMTOOL)
+mark_as_advanced(GIT_REPOSITORY_CWEBP)
+mark_as_advanced(GIT_REPOSITORY_OGG)
+mark_as_advanced(GIT_REPOSITORY_FLAC)
+mark_as_advanced(GIT_REPOSITORY_VORBIS)
+mark_as_advanced(GIT_REPOSITORY_VORBISTOOLS)
+mark_as_advanced(GIT_REPOSITORY_OPUS)
+mark_as_advanced(GIT_REPOSITORY_OPUSFILE)
+mark_as_advanced(GIT_REPOSITORY_OPUSENC)
+mark_as_advanced(GIT_REPOSITORY_OPUSTOOLS)
+
 if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 	ExternalProject_Add(netradiant
 		PREFIX ExternalProjects/netradiant
