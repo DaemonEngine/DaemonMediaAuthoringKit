@@ -89,6 +89,10 @@ mark_as_advanced(GIT_REPOSITORY_OPUSFILE)
 mark_as_advanced(GIT_REPOSITORY_OPUSENC)
 mark_as_advanced(GIT_REPOSITORY_OPUSTOOLS)
 
+if (NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel ..." FORCE)
+endif()
+
 if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 	ExternalProject_Add(netradiant
 		PREFIX ExternalProjects/netradiant
