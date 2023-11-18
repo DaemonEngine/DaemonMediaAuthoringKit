@@ -110,7 +110,7 @@ if (BUILD_NETRADIANT OR BUILD_Q3MAP2)
 		CMAKE_ARGS -DFHS_INSTALL=ON
 
 		# Always build NetRadiant and q3map2 with CRN image support
-		# even if crunch tool is not build.
+		# even if crunch tool is not built.
 		CMAKE_ARGS -DBUILD_CRUNCH=ON
 
 		if (BUILD_NETRADIANT)
