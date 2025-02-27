@@ -276,6 +276,13 @@ if (BUILD_OGGENC)
 endif ()
 
 if (BUILD_OGGENC)
+	find_program(SYSTEM_MSGFMT "msgfmt")
+	mark_as_advanced(SYSTEM_MSGFMT)
+
+	if (NOT SYSTEM_MSGFMT)
+		message(FATAL_ERRROR "msgfmt not found, please install gettext!")
+	endif()
+
 	ExternalProject_Add(vorbis-tools
 		DEPENDS vorbis ogg
 		PREFIX ExternalProjects/vorbis-tools
