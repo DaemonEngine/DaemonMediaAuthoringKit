@@ -45,6 +45,7 @@ else ()
 	set(DEFAULT_BUILD_FLAC OFF)
 endif ()
 
+option(BUILD_ACTIVATE "Build shell activator" ON)
 option(BUILD_NETRADIANT "Build NetRadiant level editor" ON)
 option(BUILD_CHAMELEON "Build Chameleon texture replacement editor" ON)
 option(BUILD_URCHEON "Build Urcheon build tool" ON)
@@ -91,6 +92,13 @@ mark_as_advanced(GIT_REPOSITORY_OPUSTOOLS)
 
 if (NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel ..." FORCE)
+endif()
+
+if (BUILD_ACTIVATE)
+	set(ACTIVATE_FILE "${CMAKE_CURRENT_BINARY_DIR}/activate")
+	file(WRITE "${ACTIVATE_FILE}" "export PATH=\"${CMAKE_INSTALL_PREFIX}/bin:\${PATH}\"\n")
+
+	add_custom_target(activate COMMAND install "${ACTIVATE_FILE}" "${CMAKE_INSTALL_PREFIX}/bin")
 endif()
 
 if (BUILD_NETRADIANT)
