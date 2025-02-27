@@ -294,6 +294,7 @@ if (BUILD_OPUSENC)
 	ExternalProject_Add(opus
 		PREFIX ExternalProjects/opus
 		GIT_REPOSITORY ${GIT_REPOSITORY_OPUS}
+		GIT_TAG main
 		BUILD_IN_SOURCE ON
 		CONFIGURE_COMMAND ./autogen.sh
 		CONFIGURE_COMMAND && ./configure --prefix=${CMAKE_INSTALL_PREFIX}
